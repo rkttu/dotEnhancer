@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+	<metadata>
+		<id>dotEnhancer</id>
+		<version>0.5.0</version>
+		<title>dotEnhancer</title>
+		<authors>rkttu.com</authors>
+		<owners>rkttu.com</owners>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<license type="expression">Apache-2.0</license>
+		<readme>docs\README.md</readme>
+		<projectUrl>https://github.com/rkttu/dotEnhancer</projectUrl>
+		<repository type="git" url="https://github.com/rkttu/dotEnhancer.git" branch="main" />
+		<description>This is a utility library that collects and provides helper methods using only the APIs supported by each version of the .NET Standard from 1.0 through 2.1.</description>
+		<releaseNotes>https://github.com/rkttu/dotEnhancer/releases</releaseNotes>
+		<copyright>(c) 2024 rkttu.com, All rights reserved.</copyright>
+		<tags>extensions methods enhancer dotenhancer</tags>
+	</metadata>
+	<files>
+		<!-- Documentation -->
+		<file src="..\README.md" target="docs\README.md" />
+		<file src="..\LICENSE" target="docs\LICENSE" />
+		
+		<!-- Source Codes -->
+		<file src="dotEnhancer\*.cs" target="src\" />
+
+		<!-- .NET Standard 1.0 -->
+		<file src="dotEnhancer.Standard10\bin\Release\netstandard1.0\dotEnhancer.dll" target="lib\netstandard10\" />
+		<file src="dotEnhancer.Standard10\bin\Release\netstandard1.0\dotEnhancer.xml" target="lib\netstandard10\" />
+		<file src="dotEnhancer.Standard10\bin\Release\netstandard1.0\dotEnhancer.pdb" target="lib\netstandard10\" />
+		<file src="dotEnhancer.Standard10\bin\Release\netstandard1.0\dotEnhancer.deps.json" target="lib\netstandard10\" />
+		<file src="dotEnhancer.Standard10\bin\Release\netstandard1.0\dotEnhancer.Resources.dll" target="lib\netstandard10\" />
+		<file src="dotEnhancer.Standard10\bin\Release\netstandard1.0\dotEnhancer.Resources.xml" target="lib\netstandard10\" />
+		<file src="dotEnhancer.Standard10\bin\Release\netstandard1.0\dotEnhancer.Resources.pdb" target="lib\netstandard10\" />
+
+		<!-- .NET Standard 1.1 -->
+		<file src="dotEnhancer.Standard11\bin\Release\netstandard1.1\dotEnhancer.dll" target="lib\netstandard11\" />
+		<file src="dotEnhancer.Standard11\bin\Release\netstandard1.1\dotEnhancer.xml" target="lib\netstandard11\" />
+		<file src="dotEnhancer.Standard11\bin\Release\netstandard1.1\dotEnhancer.pdb" target="lib\netstandard11\" />
+		<file src="dotEnhancer.Standard11\bin\Release\netstandard1.1\dotEnhancer.deps.json" target="lib\netstandard11\" />
+		<file src="dotEnhancer.Standard11\bin\Release\netstandard1.1\dotEnhancer.Resources.dll" target="lib\netstandard11\" />
+		<file src="dotEnhancer.Standard11\bin\Release\netstandard1.1\dotEnhancer.Resources.xml" target="lib\netstandard11\" />
+		<file src="dotEnhancer.Standard11\bin\Release\netstandard1.1\dotEnhancer.Resources.pdb" target="lib\netstandard11\" />
+
+		<!-- .NET Standard 1.2 -->
+		<file src="dotEnhancer.Standard12\bin\Release\netstandard1.2\dotEnhancer.dll" target="lib\netstandard12\" />
+		<file src="dotEnhancer.Standard12\bin\Release\netstandard1.2\dotEnhancer.xml" target="lib\netstandard12\" />
+		<file src="dotEnhancer.Standard12\bin\Release\netstandard1.2\dotEnhancer.pdb" target="lib\netstandard12\" />
+		<file src="dotEnhancer.Standard12\bin\Release\netstandard1.2\dotEnhancer.deps.json" target="lib\netstandard12\" />
+		<file src="dotEnhancer.Standard12\bin\Release\netstandard1.2\dotEnhancer.Resources.dll" target="lib\netstandard12\" />
+		<file src="dotEnhancer.Standard12\bin\Release\netstandard1.2\dotEnhancer.Resources.xml" target="lib\netstandard12\" />
+		<file src="dotEnhancer.Standard12\bin\Release\netstandard1.2\dotEnhancer.Resources.pdb" target="lib\netstandard12\" />
+
+		<!-- .NET Standard 1.3 -->
+		<file src="dotEnhancer.Standard13\bin\Release\netstandard1.3\dotEnhancer.dll" target="lib\netstandard13\" />
+		<file src="dotEnhancer.Standard13\bin\Release\netstandard1.3\dotEnhancer.xml" target="lib\netstandard13\" />
+		<file src="dotEnhancer.Standard13\bin\Release\netstandard1.3\dotEnhancer.pdb" target="lib\netstandard13\" />
+		<file src="dotEnhancer.Standard13\bin\Release\netstandard1.3\dotEnhancer.deps.json" target="lib\netstandard13\" />
+		<file src="dotEnhancer.Standard13\bin\Release\netstandard1.3\dotEnhancer.Resources.dll" target="lib\netstandard13\" />
+		<file src="dotEnhancer.Standard13\bin\Release\netstandard1.3\dotEnhancer.Resources.xml" target="lib\netstandard13\" />
+		<file src="dotEnhancer.Standard13\bin\Release\netstandard1.3\dotEnhancer.Resources.pdb" target="lib\netstandard13\" />
+
+		<!-- .NET Standard 1.4 -->
+		<file src="dotEnhancer.Standard14\bin\Release\netstandard1.4\dotEnhancer.dll" target="lib\netstandard14\" />
+		<file src="dotEnhancer.Standard14\bin\Release\netstandard1.4\dotEnhancer.xml" target="lib\netstandard14\" />
+		<file src="dotEnhancer.Standard14\bin\Release\netstandard1.4\dotEnhancer.pdb" target="lib\netstandard14\" />
+		<file src="dotEnhancer.Standard14\bin\Release\netstandard1.4\dotEnhancer.deps.json" target="lib\netstandard14\" />
+		<file src="dotEnhancer.Standard14\bin\Release\netstandard1.4\dotEnhancer.Resources.dll" target="lib\netstandard14\" />
+		<file src="dotEnhancer.Standard14\bin\Release\netstandard1.4\dotEnhancer.Resources.xml" target="lib\netstandard14\" />
+		<file src="dotEnhancer.Standard14\bin\Release\netstandard1.4\dotEnhancer.Resources.pdb" target="lib\netstandard14\" />
+
+		<!-- .NET Standard 1.5 -->
+		<file src="dotEnhancer.Standard15\bin\Release\netstandard1.5\dotEnhancer.dll" target="lib\netstandard15\" />
+		<file src="dotEnhancer.Standard15\bin\Release\netstandard1.5\dotEnhancer.xml" target="lib\netstandard15\" />
+		<file src="dotEnhancer.Standard15\bin\Release\netstandard1.5\dotEnhancer.pdb" target="lib\netstandard15\" />
+		<file src="dotEnhancer.Standard15\bin\Release\netstandard1.5\dotEnhancer.deps.json" target="lib\netstandard15\" />
+		<file src="dotEnhancer.Standard15\bin\Release\netstandard1.5\dotEnhancer.Resources.dll" target="lib\netstandard15\" />
+		<file src="dotEnhancer.Standard15\bin\Release\netstandard1.5\dotEnhancer.Resources.xml" target="lib\netstandard15\" />
+		<file src="dotEnhancer.Standard15\bin\Release\netstandard1.5\dotEnhancer.Resources.pdb" target="lib\netstandard15\" />
+
+		<!-- .NET Standard 1.6 -->
+		<file src="dotEnhancer.Standard16\bin\Release\netstandard1.6\dotEnhancer.dll" target="lib\netstandard16\" />
+		<file src="dotEnhancer.Standard16\bin\Release\netstandard1.6\dotEnhancer.xml" target="lib\netstandard16\" />
+		<file src="dotEnhancer.Standard16\bin\Release\netstandard1.6\dotEnhancer.pdb" target="lib\netstandard16\" />
+		<file src="dotEnhancer.Standard16\bin\Release\netstandard1.6\dotEnhancer.deps.json" target="lib\netstandard16\" />
+		<file src="dotEnhancer.Standard16\bin\Release\netstandard1.6\dotEnhancer.Resources.dll" target="lib\netstandard16\" />
+		<file src="dotEnhancer.Standard16\bin\Release\netstandard1.6\dotEnhancer.Resources.xml" target="lib\netstandard16\" />
+		<file src="dotEnhancer.Standard16\bin\Release\netstandard1.6\dotEnhancer.Resources.pdb" target="lib\netstandard16\" />
+
+		<!-- .NET Standard 2.0 -->
+		<file src="dotEnhancer.Standard20\bin\Release\netstandard2.0\dotEnhancer.dll" target="lib\netstandard20\" />
+		<file src="dotEnhancer.Standard20\bin\Release\netstandard2.0\dotEnhancer.xml" target="lib\netstandard20\" />
+		<file src="dotEnhancer.Standard20\bin\Release\netstandard2.0\dotEnhancer.pdb" target="lib\netstandard20\" />
+		<file src="dotEnhancer.Standard20\bin\Release\netstandard2.0\dotEnhancer.deps.json" target="lib\netstandard20\" />
+		<file src="dotEnhancer.Standard20\bin\Release\netstandard2.0\dotEnhancer.Resources.dll" target="lib\netstandard20\" />
+		<file src="dotEnhancer.Standard20\bin\Release\netstandard2.0\dotEnhancer.Resources.xml" target="lib\netstandard20\" />
+		<file src="dotEnhancer.Standard20\bin\Release\netstandard2.0\dotEnhancer.Resources.pdb" target="lib\netstandard20\" />
+
+		<!-- .NET Standard 2.1 -->
+		<file src="dotEnhancer.Standard21\bin\Release\netstandard2.1\dotEnhancer.dll" target="lib\netstandard21\" />
+		<file src="dotEnhancer.Standard21\bin\Release\netstandard2.1\dotEnhancer.xml" target="lib\netstandard21\" />
+		<file src="dotEnhancer.Standard21\bin\Release\netstandard2.1\dotEnhancer.pdb" target="lib\netstandard21\" />
+		<file src="dotEnhancer.Standard21\bin\Release\netstandard2.1\dotEnhancer.deps.json" target="lib\netstandard21\" />
+		<file src="dotEnhancer.Standard21\bin\Release\netstandard2.1\dotEnhancer.Resources.dll" target="lib\netstandard21\" />
+		<file src="dotEnhancer.Standard21\bin\Release\netstandard2.1\dotEnhancer.Resources.xml" target="lib\netstandard21\" />
+		<file src="dotEnhancer.Standard21\bin\Release\netstandard2.1\dotEnhancer.Resources.pdb" target="lib\netstandard21\" />
+	</files>
+</package>

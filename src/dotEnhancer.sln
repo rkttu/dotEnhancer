@@ -1,0 +1,106 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "dotEnhancer", "dotEnhancer\dotEnhancer.shproj", "{9171B20F-91DE-49EA-91BE-33CA953ECEDB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotEnhancer.Standard10", "dotEnhancer.Standard10\dotEnhancer.Standard10.csproj", "{82BF3DE0-BE88-44C6-AD7F-133F2FF2F492}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotEnhancer.Standard11", "dotEnhancer.Standard11\dotEnhancer.Standard11.csproj", "{D876B2DF-6B4E-44C1-9063-7AA2B826B121}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotEnhancer.Standard12", "dotEnhancer.Standard12\dotEnhancer.Standard12.csproj", "{F155171C-86F6-49C9-A66D-0EF6BA3D75E8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotEnhancer.Standard13", "dotEnhancer.Standard13\dotEnhancer.Standard13.csproj", "{9F4AE8F4-17D2-46EF-BAE9-BF9EB9239399}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotEnhancer.Standard14", "dotEnhancer.Standard14\dotEnhancer.Standard14.csproj", "{796B0A83-C134-4D7E-8B2A-314AC55EA53C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotEnhancer.Standard15", "dotEnhancer.Standard15\dotEnhancer.Standard15.csproj", "{2A91328F-61B0-4100-9C91-5AD0DCD9294B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotEnhancer.Standard16", "dotEnhancer.Standard16\dotEnhancer.Standard16.csproj", "{4BA5B05C-280F-4F2B-BB11-81739CA7F577}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotEnhancer.Standard20", "dotEnhancer.Standard20\dotEnhancer.Standard20.csproj", "{FD7535CA-749B-4534-9216-F29886096221}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotEnhancer.Standard21", "dotEnhancer.Standard21\dotEnhancer.Standard21.csproj", "{74A055CA-61BD-41FD-9FEA-02363B3C5B30}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotEnhancer.Resources", "dotEnhancer.Resources\dotEnhancer.Resources.csproj", "{F6F9FB46-9DCE-4E6D-A5AA-8B4DDEC756B3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotEnhancer.Test", "dotEnhancer.Test\dotEnhancer.Test.csproj", "{D213D833-C03A-462A-BDAB-D058A94C79DE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "솔루션 항목", "솔루션 항목", "{797FCAEC-58E4-4C2C-A762-9294B07478ED}"
+	ProjectSection(SolutionItems) = preProject
+		dotEnhancer.nuspec = dotEnhancer.nuspec
+		..\LICENSE = ..\LICENSE
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{82BF3DE0-BE88-44C6-AD7F-133F2FF2F492}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82BF3DE0-BE88-44C6-AD7F-133F2FF2F492}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82BF3DE0-BE88-44C6-AD7F-133F2FF2F492}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82BF3DE0-BE88-44C6-AD7F-133F2FF2F492}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D876B2DF-6B4E-44C1-9063-7AA2B826B121}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D876B2DF-6B4E-44C1-9063-7AA2B826B121}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D876B2DF-6B4E-44C1-9063-7AA2B826B121}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D876B2DF-6B4E-44C1-9063-7AA2B826B121}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F155171C-86F6-49C9-A66D-0EF6BA3D75E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F155171C-86F6-49C9-A66D-0EF6BA3D75E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F155171C-86F6-49C9-A66D-0EF6BA3D75E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F155171C-86F6-49C9-A66D-0EF6BA3D75E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F4AE8F4-17D2-46EF-BAE9-BF9EB9239399}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F4AE8F4-17D2-46EF-BAE9-BF9EB9239399}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F4AE8F4-17D2-46EF-BAE9-BF9EB9239399}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F4AE8F4-17D2-46EF-BAE9-BF9EB9239399}.Release|Any CPU.Build.0 = Release|Any CPU
+		{796B0A83-C134-4D7E-8B2A-314AC55EA53C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{796B0A83-C134-4D7E-8B2A-314AC55EA53C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{796B0A83-C134-4D7E-8B2A-314AC55EA53C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{796B0A83-C134-4D7E-8B2A-314AC55EA53C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A91328F-61B0-4100-9C91-5AD0DCD9294B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A91328F-61B0-4100-9C91-5AD0DCD9294B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A91328F-61B0-4100-9C91-5AD0DCD9294B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A91328F-61B0-4100-9C91-5AD0DCD9294B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BA5B05C-280F-4F2B-BB11-81739CA7F577}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BA5B05C-280F-4F2B-BB11-81739CA7F577}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BA5B05C-280F-4F2B-BB11-81739CA7F577}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BA5B05C-280F-4F2B-BB11-81739CA7F577}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD7535CA-749B-4534-9216-F29886096221}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD7535CA-749B-4534-9216-F29886096221}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD7535CA-749B-4534-9216-F29886096221}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD7535CA-749B-4534-9216-F29886096221}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74A055CA-61BD-41FD-9FEA-02363B3C5B30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74A055CA-61BD-41FD-9FEA-02363B3C5B30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74A055CA-61BD-41FD-9FEA-02363B3C5B30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74A055CA-61BD-41FD-9FEA-02363B3C5B30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6F9FB46-9DCE-4E6D-A5AA-8B4DDEC756B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6F9FB46-9DCE-4E6D-A5AA-8B4DDEC756B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6F9FB46-9DCE-4E6D-A5AA-8B4DDEC756B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6F9FB46-9DCE-4E6D-A5AA-8B4DDEC756B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D213D833-C03A-462A-BDAB-D058A94C79DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D213D833-C03A-462A-BDAB-D058A94C79DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D213D833-C03A-462A-BDAB-D058A94C79DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D213D833-C03A-462A-BDAB-D058A94C79DE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {476259EA-A767-46E4-AFAD-96424C6906C3}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		dotEnhancer\dotEnhancer.projitems*{2a91328f-61b0-4100-9c91-5ad0dcd9294b}*SharedItemsImports = 5
+		dotEnhancer\dotEnhancer.projitems*{4ba5b05c-280f-4f2b-bb11-81739ca7f577}*SharedItemsImports = 5
+		dotEnhancer\dotEnhancer.projitems*{74a055ca-61bd-41fd-9fea-02363b3c5b30}*SharedItemsImports = 5
+		dotEnhancer\dotEnhancer.projitems*{796b0a83-c134-4d7e-8b2a-314ac55ea53c}*SharedItemsImports = 5
+		dotEnhancer\dotEnhancer.projitems*{82bf3de0-be88-44c6-ad7f-133f2ff2f492}*SharedItemsImports = 5
+		dotEnhancer\dotEnhancer.projitems*{9171b20f-91de-49ea-91be-33ca953ecedb}*SharedItemsImports = 13
+		dotEnhancer\dotEnhancer.projitems*{9f4ae8f4-17d2-46ef-bae9-bf9eb9239399}*SharedItemsImports = 5
+		dotEnhancer\dotEnhancer.projitems*{d876b2df-6b4e-44c1-9063-7aa2b826b121}*SharedItemsImports = 5
+		dotEnhancer\dotEnhancer.projitems*{f155171c-86f6-49c9-a66d-0ef6ba3d75e8}*SharedItemsImports = 5
+		dotEnhancer\dotEnhancer.projitems*{fd7535ca-749b-4534-9216-f29886096221}*SharedItemsImports = 5
+	EndGlobalSection
+EndGlobal
