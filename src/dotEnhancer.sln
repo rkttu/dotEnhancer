@@ -30,6 +30,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "솔루션 항목", "솔루션 항목", "{797FCAEC-58E4-4C2C-A762-9294B07478ED}"
 	ProjectSection(SolutionItems) = preProject
 		dotEnhancer.nuspec = dotEnhancer.nuspec
+		dotEnhancer.targets = dotEnhancer.targets
 		..\LICENSE = ..\LICENSE
 		..\README.md = ..\README.md
 	EndProjectSection
