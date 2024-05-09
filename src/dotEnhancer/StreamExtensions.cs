@@ -2,19 +2,29 @@
 {
 #if NETSTANDARD1_0_OR_GREATER
     using System;
+    using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
 
     partial class StreamExtensions
     {
-        public static void ReadStringWithEncoding<TReadableStream, TEncoding>(this TReadableStream readableStream, TEncoding targetEncoding, Action<ArraySegment<char>> callback, int charBufferSize = 16)
+        public static void ReadStringWithEncoding<TReadableStream, TEncoding>(
+            this TReadableStream readableStream,
+            Action<ArraySegment<char>> callback,
+            TEncoding targetEncoding,
+            int charBufferSize = 16)
             where TReadableStream : Stream
             where TEncoding : Encoding
             => ReadString(readableStream, callback, targetEncoding.GetDecoder(), charBufferSize);
 
-        public static void ReadString<TReadableStream, TDecoder>(this TReadableStream readableStream, Action<ArraySegment<char>> callback, TDecoder sourceDecoder, int charBufferSize = 16)
+        public static void ReadString<TReadableStream, TDecoder>(
+            this TReadableStream readableStream,
+            Action<ArraySegment<char>> callback,
+            TDecoder sourceDecoder,
+            int charBufferSize = 16)
             where TReadableStream : Stream
             where TDecoder : Decoder
         {
@@ -53,12 +63,22 @@
             }
         }
 
-        public static Task ReadStringWithEncodingAsync<TReadableStream, TEncoding>(this TReadableStream readableStream, Func<ArraySegment<char>, CancellationToken, Task> callback, TEncoding targetEncoding, int charBufferSize = 16, CancellationToken cancellationToken = default)
+        public static Task ReadStringWithEncodingAsync<TReadableStream, TEncoding>(
+            this TReadableStream readableStream,
+            Func<ArraySegment<char>, CancellationToken, Task> callback,
+            TEncoding targetEncoding,
+            int charBufferSize = 16,
+            CancellationToken cancellationToken = default)
             where TReadableStream : Stream
             where TEncoding : Encoding
             => ReadStringAsync(readableStream, callback, targetEncoding.GetDecoder(), charBufferSize, cancellationToken);
 
-        public static async Task ReadStringAsync<TReadableStream, TDecoder>(this TReadableStream readableStream, Func<ArraySegment<char>, CancellationToken, Task> callback, TDecoder sourceDecoder, int charBufferSize = 16, CancellationToken cancellationToken = default)
+        public static async Task ReadStringAsync<TReadableStream, TDecoder>(
+            this TReadableStream readableStream,
+            Func<ArraySegment<char>, CancellationToken, Task> callback,
+            TDecoder sourceDecoder,
+            int charBufferSize = 16,
+            CancellationToken cancellationToken = default)
             where TReadableStream : Stream
             where TDecoder : Decoder
         {
@@ -97,12 +117,20 @@
             }
         }
 
-        public static void WriteStringWithEncoding<TWritableStream, TEncoding>(this TWritableStream writableStream, string value, TEncoding targetEncoding, int charBufferSize = 16)
+        public static void WriteStringWithEncoding<TWritableStream, TEncoding>(
+            this TWritableStream writableStream,
+            IEnumerable<char> value,
+            TEncoding targetEncoding,
+            int charBufferSize = 16)
             where TWritableStream : Stream
             where TEncoding : Encoding
             => WriteString(writableStream, value, targetEncoding.GetEncoder(), charBufferSize);
 
-        public static void WriteString<TWritableStream, TEncoder>(this TWritableStream writableStream, string value, TEncoder targetEncoder, int charBufferSize = 16)
+        public static void WriteString<TWritableStream, TEncoder>(
+            this TWritableStream writableStream,
+            IEnumerable<char> value,
+            TEncoder targetEncoder,
+            int charBufferSize = 16)
             where TWritableStream : Stream
             where TEncoder : Encoder
         {
@@ -124,17 +152,18 @@
             var charBuffer = new char[charBufferSize];
             var byteBuffer = new byte[charBufferSize * 4];
             var charIndex = default(int);
-            var charArray = value.ToCharArray();
+            var charArray = value.ToArray();
+            var charArrayLength = charArray.Length;
 
             while (!completed)
             {
-                int charsToCopy = Math.Min(charBufferSize, value.Length - charIndex);
+                int charsToCopy = Math.Min(charBufferSize, charArrayLength - charIndex);
                 Array.Copy(charArray, charIndex, charBuffer, 0, charsToCopy);
 
                 targetEncoder.Convert(
                     charBuffer, 0, charsToCopy,
                     byteBuffer, 0, byteBuffer.Length,
-                    charIndex + charsToCopy == value.Length,
+                    charIndex + charsToCopy == charArrayLength,
                     out int charsUsed, out int bytesUsed, out completed);
 
                 writableStream.Write(byteBuffer, 0, bytesUsed);
@@ -142,12 +171,22 @@
             }
         }
 
-        public static Task WriteStringWithEncodingAsync<TWritableStream, TEncoding>(this TWritableStream writableStream, string value, TEncoding targetEncoding, int charBufferSize = 16, CancellationToken cancellationToken = default)
+        public static Task WriteStringWithEncodingAsync<TWritableStream, TEncoding>(
+            this TWritableStream writableStream,
+            IEnumerable<char> value,
+            TEncoding targetEncoding,
+            int charBufferSize = 16,
+            CancellationToken cancellationToken = default)
             where TWritableStream : Stream
             where TEncoding : Encoding
             => WriteStringAsync(writableStream, value, targetEncoding.GetEncoder(), charBufferSize, cancellationToken);
 
-        public static async Task WriteStringAsync<TWritableStream, TEncoder>(this TWritableStream writableStream, string value, TEncoder targetEncoder, int charBufferSize = 16, CancellationToken cancellationToken = default)
+        public static async Task WriteStringAsync<TWritableStream, TEncoder>(
+            this TWritableStream writableStream,
+            IEnumerable<char> value,
+            TEncoder targetEncoder,
+            int charBufferSize = 16,
+            CancellationToken cancellationToken = default)
             where TWritableStream : Stream
             where TEncoder : Encoder
         {
@@ -169,17 +208,18 @@
             var charBuffer = new char[charBufferSize];
             var byteBuffer = new byte[charBufferSize * 4];
             var charIndex = default(int);
-            var charArray = value.ToCharArray();
+            var charArray = value.ToArray();
+            var charArrayLength = charArray.Length;
 
             while (!completed)
             {
-                int charsToCopy = Math.Min(charBufferSize, value.Length - charIndex);
+                int charsToCopy = Math.Min(charBufferSize, charArrayLength - charIndex);
                 Array.Copy(charArray, charIndex, charBuffer, 0, charsToCopy);
 
                 targetEncoder.Convert(
                     charBuffer, 0, charsToCopy,
                     byteBuffer, 0, byteBuffer.Length,
-                    charIndex + charsToCopy == value.Length,
+                    charIndex + charsToCopy == charArrayLength,
                     out int charsUsed, out int bytesUsed, out completed);
 
                 await writableStream.WriteAsync(byteBuffer, 0, bytesUsed, cancellationToken).ConfigureAwait(false);
@@ -190,51 +230,97 @@
         private static readonly Lazy<Encoding> UTF8WithoutBOMEncoding =
             new Lazy<Encoding>(() => new UTF8Encoding(false));
 
-        public static void ReadStringAsUTF8WithoutBOMBytes<TReadableStream>(this TReadableStream readableStream, Action<ArraySegment<char>> callback, int charBufferSize = 16)
+        public static void ReadStringAsUTF8WithoutBOMBytes<TReadableStream>(
+            this TReadableStream readableStream,
+            Action<ArraySegment<char>> callback,
+            int charBufferSize = 16)
             where TReadableStream : Stream
-            => ReadStringWithEncoding(readableStream, UTF8WithoutBOMEncoding.Value, callback, charBufferSize);
+            => ReadStringWithEncoding(readableStream, callback, UTF8WithoutBOMEncoding.Value, charBufferSize);
 
-        public static void WriteStringAsUTF8WithoutBOMBytes<TWritableStream>(this TWritableStream writableStream, string value, int charBufferSize = 16)
+        public static void WriteStringAsUTF8WithoutBOMBytes<TWritableStream>(
+            this TWritableStream writableStream,
+            IEnumerable<char> value,
+            int charBufferSize = 16)
             where TWritableStream : Stream
             => WriteStringWithEncoding(writableStream, value, UTF8WithoutBOMEncoding.Value, charBufferSize);
 
-        public static Task ReadStringAsUTF8WithoutBOMBytesAsync<TReadableStream>(this TReadableStream readableStream, Func<ArraySegment<char>, CancellationToken, Task> callback, int charBufferSize = 16, CancellationToken cancellationToken = default)
+        public static Task ReadStringAsUTF8WithoutBOMBytesAsync<TReadableStream>(
+            this TReadableStream readableStream,
+            Func<ArraySegment<char>, CancellationToken, Task> callback,
+            int charBufferSize = 16,
+            CancellationToken cancellationToken = default)
             where TReadableStream : Stream
             => ReadStringWithEncodingAsync(readableStream, callback, UTF8WithoutBOMEncoding.Value, charBufferSize, cancellationToken);
 
-        public static Task WriteStringAsUTF8WithoutBOMBytesAsync<TWritableStream>(this TWritableStream writableStream, string value, int charBufferSize = 16, CancellationToken cancellationToken = default)
+        public static Task WriteStringAsUTF8WithoutBOMBytesAsync<TWritableStream>(
+            this TWritableStream writableStream,
+            IEnumerable<char> value,
+            int charBufferSize = 16,
+            CancellationToken cancellationToken = default)
             where TWritableStream : Stream
             => WriteStringWithEncodingAsync(writableStream, value, UTF8WithoutBOMEncoding.Value, charBufferSize, cancellationToken);
 
-        public static void ReadStringAsUTF8Bytes<TReadableStream>(this TReadableStream readableStream, Action<ArraySegment<char>> callback, int charBufferSize = 16)
+        public static void ReadStringAsUTF8Bytes<TReadableStream>(
+            this TReadableStream readableStream,
+            Action<ArraySegment<char>> callback,
+            int charBufferSize = 16)
             where TReadableStream : Stream
-            => ReadStringWithEncoding(readableStream, Encoding.UTF8, callback, charBufferSize);
+            => ReadStringWithEncoding(readableStream, callback, Encoding.UTF8, charBufferSize);
 
-        public static void WriteStringAsUTF8Bytes<TWritableStream>(this TWritableStream writableStream, string value, int charBufferSize = 16)
+        public static void WriteStringAsUTF8Bytes<TWritableStream>(
+            this TWritableStream writableStream,
+            IEnumerable<char> value,
+            int charBufferSize = 16)
             where TWritableStream : Stream
             => WriteStringWithEncoding(writableStream, value, Encoding.UTF8, charBufferSize);
 
-        public static Task ReadStringAsUTF8BytesAsync<TReadableStream>(this TReadableStream readableStream, Func<ArraySegment<char>, CancellationToken, Task> callback, int charBufferSize = 16, CancellationToken cancellationToken = default)
+        public static Task ReadStringAsUTF8BytesAsync<TReadableStream>(
+            this TReadableStream readableStream,
+            Func<ArraySegment<char>, CancellationToken, Task> callback,
+            int charBufferSize = 16,
+            CancellationToken cancellationToken = default)
             where TReadableStream : Stream
             => ReadStringWithEncodingAsync(readableStream, callback, Encoding.UTF8, charBufferSize, cancellationToken);
 
-        public static Task WriteStringAsUTF8BytesAsync<TWritableStream>(this TWritableStream writableStream, string value, int charBufferSize = 16, CancellationToken cancellationToken = default)
+        public static Task WriteStringAsUTF8BytesAsync<TWritableStream>(
+            this TWritableStream writableStream,
+            IEnumerable<char> value,
+            int charBufferSize = 16,
+            CancellationToken cancellationToken = default)
             where TWritableStream : Stream
             => WriteStringWithEncodingAsync(writableStream, value, Encoding.UTF8, charBufferSize, cancellationToken);
 
-        public static void ReadStringAsEncodedBytes<TReadableStream>(this TReadableStream readableStream, Action<ArraySegment<char>> callback, string encodingName, int charBufferSize = 16)
+        public static void ReadStringAsEncodedBytes<TReadableStream>(
+            this TReadableStream readableStream,
+            Action<ArraySegment<char>> callback,
+            string encodingName,
+            int charBufferSize = 16)
             where TReadableStream : Stream
-            => ReadStringWithEncoding(readableStream, Encoding.GetEncoding(encodingName), callback, charBufferSize);
+            => ReadStringWithEncoding(readableStream, callback, Encoding.GetEncoding(encodingName), charBufferSize);
 
-        public static void WriteStringAsEncodedBytes<TWritableStream>(this TWritableStream writableStream, string value, string encodingName, int charBufferSize = 16)
+        public static void WriteStringAsEncodedBytes<TWritableStream>(
+            this TWritableStream writableStream,
+            IEnumerable<char> value,
+            string encodingName,
+            int charBufferSize = 16)
             where TWritableStream : Stream
             => WriteStringWithEncoding(writableStream, value, Encoding.GetEncoding(encodingName), charBufferSize);
 
-        public static Task ReadStringAsEncodedBytesAsync<TReadableStream>(this TReadableStream readableStream, Func<ArraySegment<char>, CancellationToken, Task> callback, string encodingName, int charBufferSize = 16, CancellationToken cancellationToken = default)
+        public static Task ReadStringAsEncodedBytesAsync<TReadableStream>(
+            this TReadableStream readableStream,
+            Func<ArraySegment<char>, CancellationToken, Task> callback,
+            string encodingName,
+            int charBufferSize = 16,
+            CancellationToken cancellationToken = default)
             where TReadableStream : Stream
             => ReadStringWithEncodingAsync(readableStream, callback, Encoding.GetEncoding(encodingName), charBufferSize);
 
-        public static void WriteStringAsEncodedBytesAsync<TWritableStream>(this TWritableStream writableStream, string value, string encodingName, int charBufferSize = 16, CancellationToken cancellationToken = default)
+        public static void WriteStringAsEncodedBytesAsync<TWritableStream>(
+            this TWritableStream writableStream,
+            IEnumerable<char> value,
+            string encodingName,
+            int charBufferSize = 16,
+            CancellationToken cancellationToken = default)
             where TWritableStream : Stream
             => WriteStringWithEncodingAsync(writableStream, value, Encoding.GetEncoding(encodingName), charBufferSize, cancellationToken);
     }
@@ -243,19 +329,35 @@
 #if NETSTANDARD1_3_OR_GREATER
     partial class StreamExtensions
     {
-        public static void WriteStringAsASCIIBytes<TWritableStream>(this TWritableStream writableStream, string value, int charBufferSize = 16)
+        public static void WriteStringAsASCIIBytes<TWritableStream>(
+            this TWritableStream writableStream,
+            IEnumerable<char> value,
+            int charBufferSize = 16)
             where TWritableStream : Stream
             => WriteStringWithEncoding(writableStream, value, Encoding.ASCII, charBufferSize);
 
-        public static Task WriteStringAsASCIIBytesAsync<TWritableStream>(this TWritableStream writableStream, string value, int charBufferSize = 16, CancellationToken cancellationToken = default)
+        public static Task WriteStringAsASCIIBytesAsync<TWritableStream>(
+            this TWritableStream writableStream,
+            IEnumerable<char> value,
+            int charBufferSize = 16,
+            CancellationToken cancellationToken = default)
             where TWritableStream : Stream
             => WriteStringWithEncodingAsync(writableStream, value, Encoding.ASCII, charBufferSize, cancellationToken);
 
-        public static void WriteStringAsToEncodedBytes<TWritableStream>(this TWritableStream writableStream, string value, int codePage, int charBufferSize = 16)
+        public static void WriteStringAsToEncodedBytes<TWritableStream>(
+            this TWritableStream writableStream,
+            IEnumerable<char> value,
+            int codePage,
+            int charBufferSize = 16)
             where TWritableStream : Stream
             => WriteStringWithEncoding(writableStream, value, Encoding.GetEncoding(codePage), charBufferSize);
 
-        public static Task WriteStringAsEncodedBytesAsync<TWritableStream>(this TWritableStream writableStream, string value, int codePage, int charBufferSize = 16, CancellationToken cancellationToken = default)
+        public static Task WriteStringAsEncodedBytesAsync<TWritableStream>(
+            this TWritableStream writableStream,
+            IEnumerable<char> value,
+            int codePage,
+            int charBufferSize = 16,
+            CancellationToken cancellationToken = default)
             where TWritableStream : Stream
             => WriteStringWithEncodingAsync(writableStream, value, Encoding.GetEncoding(codePage), charBufferSize, cancellationToken);
     }
