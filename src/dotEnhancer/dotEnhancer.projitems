@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)RngExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ObjectExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StreamExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FileInfoExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Template.cs" />
   </ItemGroup>
 </Project>
