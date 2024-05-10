@@ -58,6 +58,14 @@ sb.AppendLine(", World!");
 Console.Out.WriteLine(sb.ToString());
 ```
 
+### Overwrite Text and Secure Delete (.NET Standard 1.3 or later)
+
+```csharp
+var fileInfo = new FileInfo(Path.GetTempFileName());
+fileInfo.OverwriteAllText("Hello, World!", new UTF8Encoding(false));
+fileInfo.SecureDelete(SecureDeleteObfuscationMode.All);
+```
+
 ## License
 
 This library is under the Apache 2.0 license.
