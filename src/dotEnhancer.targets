@@ -6,11 +6,9 @@
 		<Nullable>enable</Nullable>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 	</PropertyGroup>
-	
+
 	<PropertyGroup>
-		<Version>0.5.2</Version>
-		<FileVersion>0.5.2</FileVersion>
-		<AssemblyVersion>0.5.2</AssemblyVersion>
+		<NuspecVersion />
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -38,4 +36,57 @@
 			<_Parameter1>dotEnhancer.Test</_Parameter1>
 		</AssemblyAttribute>
 	</ItemGroup>
+
+	<!-- 네임스페이스 매핑 정의 -->
+	<UsingTask TaskName="XmlPeekNamespaced" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll" TaskFactory="CodeTaskFactory">
+		<ParameterGroup>
+			<Namespaces ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true"/>
+			<XmlInputPath ParameterType="System.String" Required="true"/>
+			<Query ParameterType="System.String" Required="true"/>
+			<Result ParameterType="System.String" Output="true"/>
+		</ParameterGroup>
+		<Task>
+			<Reference Include="System.Xml"/>
+			<Using Namespace="System"/>
+			<Using Namespace="System.Xml"/>
+			<Using Namespace="Microsoft.Build.Utilities"/>
+			<Using Namespace="Microsoft.Build.Framework"/>
+			<Code Type="Fragment" Language="cs">
+				<![CDATA[
+//Log.LogMessage(MessageImportance.High, item.ItemSpec);
+var doc = new XmlDocument();
+var ns = new XmlNamespaceManager(doc.NameTable);
+foreach (var item in Namespaces)
+{
+	var parts = item.ItemSpec.Split('=');
+	ns.AddNamespace(parts[0], parts[1]);
+}
+doc.Load(XmlInputPath);
+var node = doc.SelectSingleNode(Query, ns);
+Result = (node != null) ? node.InnerText : string.Empty;
+return true;
+]]>
+			</Code>
+		</Task>
+	</UsingTask>
+
+	<!-- XML에서 버전 정보 읽기 -->
+	<Target Name="SetVersionInfo" BeforeTargets="BeforeBuild">
+		<XmlPeekNamespaced
+			XmlInputPath="$(SolutionDir)\dotEnhancer.nuspec"
+			Namespaces="nu=http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd;"
+			Query="/nu:package/nu:metadata/nu:version">
+			<Output TaskParameter="Result" PropertyName="NuspecVersion"/>
+		</XmlPeekNamespaced>
+
+		<!-- 읽은 버전 정보를 프로젝트 버전으로 설정 -->
+		<PropertyGroup>
+			<Version>$(NuspecVersion)</Version>
+			<FileVersion>$(NuspecVersion)</FileVersion>
+			<AssemblyVersion>$(NuspecVersion)</AssemblyVersion>
+		</PropertyGroup>
+
+		<!-- 디버깅을 위한 버전 정보 출력 -->
+		<Message Importance="high" Text="Version from nuspec: $(NuspecVersion)" />
+	</Target>
 </Project>
