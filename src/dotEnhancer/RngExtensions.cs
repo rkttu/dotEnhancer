@@ -3,6 +3,7 @@
 namespace dotEnhancer
 {
 #if NETSTANDARD1_3_OR_GREATER
+    using System.Collections.Generic;
     using System.Net;
     using System.Security.Cryptography;
 
@@ -20,6 +21,17 @@ namespace dotEnhancer
             var blob = new byte[1];
             rng.GetBytes(blob);
             return (blob[0] & 0x01) == 0; // 첫 번째 비트만 확인
+        }
+
+        public static IEnumerable<bool> EnumerateBooleans<TRng>(this TRng rng, int? count = default)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextBoolean();
         }
 
         public static byte NextByte<TRng>(this TRng rng, byte min = byte.MinValue, byte max = byte.MaxValue)
@@ -44,6 +56,17 @@ namespace dotEnhancer
             }
         }
 
+        public static IEnumerable<byte> EnumerateBytes<TRng>(this TRng rng, int? count = default, byte min = byte.MinValue, byte max = byte.MaxValue)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextByte(min, max);
+        }
+
         public static sbyte NextSByte<TRng>(this TRng rng, sbyte min = sbyte.MinValue, sbyte max = sbyte.MaxValue)
             where TRng : RandomNumberGenerator
         {
@@ -66,6 +89,17 @@ namespace dotEnhancer
             }
         }
 
+        public static IEnumerable<sbyte> EnumerateSBytes<TRng>(this TRng rng, int? count = default, sbyte min = sbyte.MinValue, sbyte max = sbyte.MaxValue)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextSByte(min, max);
+        }
+
         public static char NextChar<TRng>(this TRng rng, char min = char.MinValue, char max = char.MaxValue)
             where TRng : RandomNumberGenerator
         {
@@ -84,6 +118,17 @@ namespace dotEnhancer
                 if (value < threshold)
                     return (char)(value % range + min);
             }
+        }
+
+        public static IEnumerable<char> EnumerateChars<TRng>(this TRng rng, int? count = default, char min = char.MinValue, char max = char.MaxValue)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextChar(min, max);
         }
 
         public static short NextInt16<TRng>(this TRng rng, short min = short.MinValue, short max = short.MaxValue)
@@ -108,6 +153,17 @@ namespace dotEnhancer
             }
         }
 
+        public static IEnumerable<short> EnumerateInt16s<TRng>(this TRng rng, int? count = default, short min = short.MinValue, short max = short.MaxValue)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextInt16(min, max);
+        }
+
         public static ushort NextUInt16<TRng>(this TRng rng, ushort min = ushort.MinValue, ushort max = ushort.MaxValue)
             where TRng : RandomNumberGenerator
         {
@@ -126,6 +182,17 @@ namespace dotEnhancer
                 if (value < threshold)
                     return (ushort)(value % range + min);
             }
+        }
+
+        public static IEnumerable<ushort> EnumerateUInt16s<TRng>(this TRng rng, int? count = default, ushort min = ushort.MinValue, ushort max = ushort.MaxValue)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextUInt16(min, max);
         }
 
         public static int NextInt32<TRng>(this TRng rng, int min = int.MinValue, int max = int.MaxValue)
@@ -148,6 +215,17 @@ namespace dotEnhancer
             }
         }
 
+        public static IEnumerable<int> EnumerateInt32s<TRng>(this TRng rng, int? count = default, int min = int.MinValue, int max = int.MaxValue)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextInt32(min, max);
+        }
+
         public static uint NextUInt32<TRng>(this TRng rng, uint min = uint.MinValue, uint max = uint.MaxValue)
             where TRng : RandomNumberGenerator
         {
@@ -166,6 +244,17 @@ namespace dotEnhancer
                 if (value < threshold)
                     return (uint)(value % range + min);
             }
+        }
+
+        public static IEnumerable<uint> EnumerateUInt32s<TRng>(this TRng rng, int? count = default, uint min = uint.MinValue, uint max = uint.MaxValue)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextUInt32(min, max);
         }
 
         public static long NextInt64<TRng>(this TRng rng, long min = long.MinValue, long max = long.MaxValue)
@@ -188,6 +277,17 @@ namespace dotEnhancer
             }
         }
 
+        public static IEnumerable<long> EnumerateInt64s<TRng>(this TRng rng, int? count = default, long min = long.MinValue, long max = long.MaxValue)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextInt64(min, max);
+        }
+
         public static ulong NextUInt64<TRng>(this TRng rng, ulong min = ulong.MinValue, ulong max = ulong.MaxValue)
             where TRng : RandomNumberGenerator
         {
@@ -206,6 +306,17 @@ namespace dotEnhancer
                 if (value < threshold)
                     return value % range + min;
             }
+        }
+
+        public static IEnumerable<ulong> EnumerateUInt64s<TRng>(this TRng rng, int? count = default, ulong min = ulong.MinValue, ulong max = ulong.MaxValue)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextUInt64(min, max);
         }
 
         public static float NextSingle<TRng>(this TRng rng, float min = float.MinValue, float max = float.MaxValue)
@@ -233,6 +344,17 @@ namespace dotEnhancer
             return normalizedValue * (max - min) + min;
         }
 
+        public static IEnumerable<float> EnumerateSingles<TRng>(this TRng rng, int? count = default, float min = float.MinValue, float max = float.MaxValue)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextSingle(min, max);
+        }
+
         public static double NextDouble<TRng>(this TRng rng, double min = double.MinValue, double max = double.MaxValue)
             where TRng : RandomNumberGenerator
         {
@@ -256,6 +378,17 @@ namespace dotEnhancer
 
             // 범위와 최소값을 이용하여 결과 스케일링
             return normalizedValue * (max - min) + min;
+        }
+
+        public static IEnumerable<double> EnumerateDoubles<TRng>(this TRng rng, int? count = default, double min = double.MinValue, double max = double.MaxValue)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextDouble(min, max);
         }
 
         public static decimal NextDecimal<TRng>(this TRng rng, decimal min = -1E+28m, decimal max = 1E+28m)
@@ -289,6 +422,17 @@ namespace dotEnhancer
             }
         }
 
+        public static IEnumerable<decimal> EnumerateDecimals<TRng>(this TRng rng, int? count = default, decimal min = -1E+28m, decimal max = 1E+28m)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextDecimal(min, max);
+        }
+
         public static DateTime NextDateTime<TRng>(this TRng rng, DateTime? min = null, DateTime? max = null)
             where TRng : RandomNumberGenerator
         {
@@ -304,6 +448,17 @@ namespace dotEnhancer
             var ticks = BitConverter.ToUInt64(blob, 0) % (ulong)timespan.Ticks;
 
             return minValue + new TimeSpan((long)ticks);
+        }
+
+        public static IEnumerable<DateTime> EnumerateDateTimes<TRng>(this TRng rng, int? count = default, DateTime? min = null, DateTime? max = null)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextDateTime(min, max);
         }
 
         public static DateTimeOffset NextDateTimeOffset<TRng>(this TRng rng, DateTimeOffset? min = null, DateTimeOffset? max = null)
@@ -323,6 +478,17 @@ namespace dotEnhancer
             return minValue + new TimeSpan((long)ticks);
         }
 
+        public static IEnumerable<DateTimeOffset> EnumerateDateTimeOffsets<TRng>(this TRng rng, int? count = default, DateTimeOffset? min = null, DateTimeOffset? max = null)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextDateTimeOffset(min, max);
+        }
+
         public static TimeSpan NextTimeSpan<TRng>(this TRng rng, TimeSpan? min = null, TimeSpan? max = null)
             where TRng : RandomNumberGenerator
         {
@@ -340,12 +506,34 @@ namespace dotEnhancer
             return minValue + new TimeSpan((long)ticks);
         }
 
+        public static IEnumerable<TimeSpan> EnumerateTimeSpans<TRng>(this TRng rng, int? count = default, TimeSpan? min = null, TimeSpan? max = null)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextTimeSpan(min, max);
+        }
+
         public static Guid NextGuid<TRng>(this TRng rng)
             where TRng : RandomNumberGenerator
         {
             var blob = new byte[16];
             rng.GetBytes(blob);
             return new Guid(blob);
+        }
+
+        public static IEnumerable<Guid> EnumerateGuids<TRng>(this TRng rng, int? count = default)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextGuid();
         }
 
         public static Version NextVersion<TRng>(this TRng rng, Version? min = default, Version? max = default)
@@ -369,27 +557,95 @@ namespace dotEnhancer
             return new Version(major, minor, build, revision);
         }
 
-        public static IPAddress NextIPAddress<TRng>(this TRng rng, bool ipv6 = false, long ipv6ScopeId = 0L)
+        public static IEnumerable<Version> EnumerateVersions<TRng>(this TRng rng, int? count = default, Version? min = default, Version? max = default)
             where TRng : RandomNumberGenerator
         {
-            var bytes = rng.NextBytes(ipv6 ? 16 : 4);
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
 
-            if (ipv6)
-                return new IPAddress(bytes, ipv6ScopeId);
-            else
-            {
-                bytes[0] = bytes[0] < 1 ? (byte)1 : bytes[0];
-                return new IPAddress(bytes);
-            }
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextVersion(min, max);
         }
 
-        public static IPEndPoint NextIPEndPoint<TRng>(this TRng rng, bool ipv6 = false, long ipv6ScopeId = 0L)
+        public static IPAddress NextIPv4Address<TRng>(this TRng rng)
             where TRng : RandomNumberGenerator
-            => new IPEndPoint(rng.NextIPAddress(ipv6, ipv6ScopeId), rng.NextPortNumber());
+        {
+            var bytes = rng.NextByteArray(4);
+            bytes[0] = bytes[0] < 1 ? (byte)1 : bytes[0];
+            return new IPAddress(bytes);
+        }
+
+        public static IEnumerable<IPAddress> EnumerateIPv4Addresses<TRng>(this TRng rng, int? count = default)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextIPv4Address();
+        }
+
+        public static IPAddress NextIPv6Address<TRng>(this TRng rng, long ipv6ScopeId = 0L)
+            where TRng : RandomNumberGenerator
+            => new IPAddress(rng.NextByteArray(16), ipv6ScopeId);
+
+        public static IEnumerable<IPAddress> EnumerateIPv6Addresses<TRng>(this TRng rng, int? count = default, long ipv6ScopeId = 0L)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextIPv6Address(ipv6ScopeId);
+        }
+
+        public static IPEndPoint NextIPv4EndPoint<TRng>(this TRng rng)
+            where TRng : RandomNumberGenerator
+            => new IPEndPoint(rng.NextIPv4Address(), rng.NextPortNumber());
+
+        public static IEnumerable<IPEndPoint> EnumerateIPv4EndPoints<TRng>(this TRng rng, int? count = default)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextIPv4EndPoint();
+        }
+
+        public static IPEndPoint NextIPv6EndPoint<TRng>(this TRng rng, long ipv6ScopeId = 0L)
+            where TRng : RandomNumberGenerator
+            => new IPEndPoint(rng.NextIPv6Address(ipv6ScopeId), rng.NextPortNumber());
+
+        public static IEnumerable<IPEndPoint> EnumerateIPv6EndPoints<TRng>(this TRng rng, int? count = default, long ipv6ScopeId = 0L)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextIPv6EndPoint(ipv6ScopeId);
+        }
 
         public static int NextPortNumber<TRng>(this TRng rng)
             where TRng : RandomNumberGenerator
             => 49152 + (rng.NextUInt16() % (65535 - 49152 + 1));
+
+        public static IEnumerable<int> EnumeratePortNumbers<TRng>(this TRng rng, int? count = default)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextPortNumber();
+        }
 
         public static string NextBase64<TRng>(this TRng rng, int minLength = 16, int maxLength = 512)
             where TRng : RandomNumberGenerator
@@ -405,7 +661,18 @@ namespace dotEnhancer
             return Convert.ToBase64String(blob);
         }
 
-        public static byte[] NextBytes<TRng>(this TRng rng, int length)
+        public static IEnumerable<string> EnumerateBase64<TRng>(this TRng rng, int? count = default, int minLength = 16, int maxLength = 512)
+            where TRng : RandomNumberGenerator
+        {
+            if (count.HasValue && count < 0)
+                throw new ArgumentException(ErrorMessages.RandomNumberGeneratorExtensions_CountCannotBeNegative, nameof(count));
+
+            var iterationCount = 0;
+            while (!count.HasValue || iterationCount++ < count)
+                yield return rng.NextBase64(minLength, maxLength);
+        }
+
+        public static byte[] NextByteArray<TRng>(this TRng rng, int length)
             where TRng : RandomNumberGenerator
         {
             if (length < 0)

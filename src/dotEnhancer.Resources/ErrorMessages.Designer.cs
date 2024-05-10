@@ -62,6 +62,15 @@ namespace dotEnhancer {
         }
         
         /// <summary>
+        ///   The count value should greater than zero.과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string RandomNumberGeneratorExtensions_CountCannotBeNegative {
+            get {
+                return ResourceManager.GetString("RandomNumberGeneratorExtensions_CountCannotBeNegative", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   The minimum length of the string must be less than the maximum length.과(와) 유사한 지역화된 문자열을 찾습니다.
         /// </summary>
         internal static string RandomNumberGeneratorExtensions_MinLengthMustBeLessThanMaxLength {
