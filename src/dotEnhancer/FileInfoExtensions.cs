@@ -132,5 +132,5 @@
     }
 #endif // NETSTANDARD1_3_OR_GREATER
 
-    internal static partial class FileInfoExtensions { }
+    public static partial class FileInfoExtensions { }
 }
