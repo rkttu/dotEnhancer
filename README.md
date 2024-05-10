@@ -20,7 +20,7 @@ dotnet add package dotEnhancer
 
 ## Usage
 
-### Random Number Generator (.NET Standard 1.0 or later)
+### Random Number Generator (.NET Standard 1.3 or later)
 
 ```csharp
 using dotEnhancer;
