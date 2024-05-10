@@ -9,7 +9,7 @@ public class FileInfoExtensionTest
     {
         var fileInfo = new FileInfo(Path.GetTempFileName());
         fileInfo.OverwriteAllText("Hello, World!", new UTF8Encoding(false));
-        fileInfo.SecureDelete(SecureDeleteObfuscationMode.All);
+        fileInfo.SecureDelete(5, SecureDeleteObfuscationMode.All);
         Assert.False(fileInfo.Exists);
     }
 }

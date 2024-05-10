@@ -52,10 +52,13 @@
         private const int MaxRandomSize = 1024;
 
         // Original Source Code: https://github.com/bitbeans/diskdetector-net
-        public static void SecureDelete(this FileInfo fileInfo, SecureDeleteObfuscationMode obfuscationMode = SecureDeleteObfuscationMode.All)
+        public static void SecureDelete(this FileInfo fileInfo, int repeatCount = 3, SecureDeleteObfuscationMode obfuscationMode = SecureDeleteObfuscationMode.All)
         {
             if (!fileInfo.Exists)
                 return;
+
+            if (repeatCount < 1)
+                repeatCount = 1;
 
             using (var rng = RandomNumberGenerator.Create())
             {
@@ -68,13 +71,18 @@
 
                     using (var fileStream = new FileStream(fileInfo.FullName, FileMode.Open, FileAccess.Write, FileShare.None))
                     {
-                        for (var size = fileStream.Length; size > 0; size -= MaxBufferSize)
+                        for (var i = 0; i < repeatCount; i++)
                         {
-                            var bufferSize = (size < MaxBufferSize) ? size : MaxBufferSize;
-                            var buffer = fillRandomData ? rng.NextByteArray(bufferSize) : new byte[bufferSize];
+                            for (var size = fileStream.Length; size > 0; size -= MaxBufferSize)
+                            {
+                                var bufferSize = (size < MaxBufferSize) ? size : MaxBufferSize;
+                                var buffer = fillRandomData ? rng.NextByteArray(bufferSize) : new byte[bufferSize];
 
-                            fileStream.Write(buffer, 0, buffer.Length);
-                            fileStream.Flush(true);
+                                fileStream.Write(buffer, 0, buffer.Length);
+                                fileStream.Flush(true);
+                            }
+
+                            fileStream.Seek(0L, SeekOrigin.Begin);
                         }
 
                         if (modifyFileSize)
@@ -91,10 +99,13 @@
             }
         }
 
-        public static async Task SecureDeleteAsync(this FileInfo fileInfo, SecureDeleteObfuscationMode obfuscationMode = SecureDeleteObfuscationMode.All, CancellationToken cancellationToken = default)
+        public static async Task SecureDeleteAsync(this FileInfo fileInfo, int repeatCount = 3, SecureDeleteObfuscationMode obfuscationMode = SecureDeleteObfuscationMode.All, CancellationToken cancellationToken = default)
         {
             if (!fileInfo.Exists)
                 return;
+
+            if (repeatCount < 1)
+                repeatCount = 1;
 
             using (var rng = RandomNumberGenerator.Create())
             {
@@ -107,13 +118,18 @@
 
                     using (var fileStream = new FileStream(fileInfo.FullName, FileMode.Open, FileAccess.Write, FileShare.None))
                     {
-                        for (var size = fileStream.Length; size > 0; size -= MaxBufferSize)
+                        for (var i = 0; i < repeatCount; i++)
                         {
-                            var bufferSize = (size < MaxBufferSize) ? size : MaxBufferSize;
-                            var buffer = fillRandomData ? rng.NextByteArray(bufferSize) : new byte[bufferSize];
+                            for (var size = fileStream.Length; size > 0; size -= MaxBufferSize)
+                            {
+                                var bufferSize = (size < MaxBufferSize) ? size : MaxBufferSize;
+                                var buffer = fillRandomData ? rng.NextByteArray(bufferSize) : new byte[bufferSize];
 
-                            await fileStream.WriteAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
-                            await fileStream.FlushAsync(cancellationToken).ConfigureAwait(false);
+                                await fileStream.WriteAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
+                                await fileStream.FlushAsync(cancellationToken).ConfigureAwait(false);
+                            }
+
+                            fileStream.Seek(0L, SeekOrigin.Begin);
                         }
 
                         if (modifyFileSize)
