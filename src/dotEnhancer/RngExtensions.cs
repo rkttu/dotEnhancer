@@ -674,8 +674,12 @@ namespace dotEnhancer
 
         public static byte[] NextByteArray<TRng>(this TRng rng, int length)
             where TRng : RandomNumberGenerator
+            => NextByteArray(rng, length);
+
+        public static byte[] NextByteArray<TRng>(this TRng rng, long length)
+            where TRng : RandomNumberGenerator
         {
-            if (length < 0)
+            if (length < 0L)
                 throw new ArgumentOutOfRangeException(nameof(length), length, "Length cannot be negative number.");
 
             var blob = new byte[length];
