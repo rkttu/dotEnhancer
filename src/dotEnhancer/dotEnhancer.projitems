@@ -9,6 +9,8 @@
     <Import_RootNamespace>dotEnhancer</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Internals.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SecureDeleteObfuscationMode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StringExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RngExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ObjectExtensions.cs" />

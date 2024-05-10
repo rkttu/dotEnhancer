@@ -1,15 +1,13 @@
-﻿using System.Threading.Tasks;
-using System.Threading;
-
-namespace dotEnhancer
+﻿namespace dotEnhancer
 {
 #if NETSTANDARD1_3_OR_GREATER
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     partial class FileInfoExtensions
     {
@@ -54,110 +52,85 @@ namespace dotEnhancer
         private const int MaxRandomSize = 1024;
 
         // Original Source Code: https://github.com/bitbeans/diskdetector-net
-        public static bool SecureDelete(this FileInfo fileInfo)
+        public static void SecureDelete(this FileInfo fileInfo, SecureDeleteObfuscationMode obfuscationMode = SecureDeleteObfuscationMode.All)
         {
             if (!fileInfo.Exists)
-                return false;
+                return;
 
             using (var rng = RandomNumberGenerator.Create())
-            using (var fileStream = new FileStream(fileInfo.FullName, FileMode.Open, FileAccess.Write, FileShare.None))
             {
-                for (var size = fileStream.Length; size > 0; size -= MaxBufferSize)
+                try
                 {
-                    var bufferSize = (size < MaxBufferSize) ? size : MaxBufferSize;
-                    var buffer = rng.NextByteArray(bufferSize);
+                    Internals.PerformObfuscation_BeforeOverwrite(fileInfo, obfuscationMode);
 
-                    fileStream.Write(buffer, 0, buffer.Length);
-                    fileStream.Flush(true);
+                    var fillRandomData = (obfuscationMode & SecureDeleteObfuscationMode.FillWithRandomData) == SecureDeleteObfuscationMode.FillWithRandomData;
+                    var modifyFileSize = (obfuscationMode & SecureDeleteObfuscationMode.ModifyFileSize) == SecureDeleteObfuscationMode.ModifyFileSize;
+
+                    using (var fileStream = new FileStream(fileInfo.FullName, FileMode.Open, FileAccess.Write, FileShare.None))
+                    {
+                        for (var size = fileStream.Length; size > 0; size -= MaxBufferSize)
+                        {
+                            var bufferSize = (size < MaxBufferSize) ? size : MaxBufferSize;
+                            var buffer = fillRandomData ? rng.NextByteArray(bufferSize) : new byte[bufferSize];
+
+                            fileStream.Write(buffer, 0, buffer.Length);
+                            fileStream.Flush(true);
+                        }
+
+                        if (modifyFileSize)
+                        {
+                            try { fileStream.SetLength(rng.NextInt32(MinRandomSize, MaxRandomSize)); }
+                            catch { }
+                        }
+                    }
+
+                    Internals.PerformObfuscation_AfterOverwrite(fileInfo, obfuscationMode, rng);
                 }
-
-                fileStream.SetLength(rng.NextInt32(MinRandomSize, MaxRandomSize));
+                catch { }
+                finally { fileInfo.Delete(); }
             }
-
-            fileInfo.Delete();
-            return true;
         }
 
-        private static void TurnOffContentIndexing(this FileSystemInfo fileSystemInfo)
-            => fileSystemInfo.Attributes |= FileAttributes.NotContentIndexed;
-
-        public static async Task<bool> SecureDeleteAsync(this FileInfo fileInfo, CancellationToken cancellationToken = default)
+        public static async Task SecureDeleteAsync(this FileInfo fileInfo, SecureDeleteObfuscationMode obfuscationMode = SecureDeleteObfuscationMode.All, CancellationToken cancellationToken = default)
         {
             if (!fileInfo.Exists)
-                return false;
-
-            fileInfo.TurnOffContentIndexing();
+                return;
 
             using (var rng = RandomNumberGenerator.Create())
-            using (var fileStream = new FileStream(fileInfo.FullName, FileMode.Open, FileAccess.Write, FileShare.None))
             {
-                for (var size = fileStream.Length; size > 0; size -= MaxBufferSize)
+                try
                 {
-                    var bufferSize = (size < MaxBufferSize) ? size : MaxBufferSize;
-                    var buffer = rng.NextByteArray(bufferSize);
+                    Internals.PerformObfuscation_BeforeOverwrite(fileInfo, obfuscationMode);
 
-                    await fileStream.WriteAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
-                    await fileStream.FlushAsync(cancellationToken).ConfigureAwait(false);
+                    var fillRandomData = (obfuscationMode & SecureDeleteObfuscationMode.FillWithRandomData) == SecureDeleteObfuscationMode.FillWithRandomData;
+                    var modifyFileSize = (obfuscationMode & SecureDeleteObfuscationMode.ModifyFileSize) == SecureDeleteObfuscationMode.ModifyFileSize;
+
+                    using (var fileStream = new FileStream(fileInfo.FullName, FileMode.Open, FileAccess.Write, FileShare.None))
+                    {
+                        for (var size = fileStream.Length; size > 0; size -= MaxBufferSize)
+                        {
+                            var bufferSize = (size < MaxBufferSize) ? size : MaxBufferSize;
+                            var buffer = fillRandomData ? rng.NextByteArray(bufferSize) : new byte[bufferSize];
+
+                            await fileStream.WriteAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
+                            await fileStream.FlushAsync(cancellationToken).ConfigureAwait(false);
+                        }
+
+                        if (modifyFileSize)
+                        {
+                            try { fileStream.SetLength(rng.NextInt32(MinRandomSize, MaxRandomSize)); }
+                            catch { }
+                        }
+                    }
+
+                    Internals.PerformObfuscation_AfterOverwrite(fileInfo, obfuscationMode, rng);
                 }
-
-                fileStream.SetLength(rng.NextInt32(MinRandomSize, MaxRandomSize));
+                catch { }
+                finally { fileInfo.Delete(); }
             }
-
-            return true;
         }
     }
 #endif // NETSTANDARD1_3_OR_GREATER
-
-#if NETSTANDARD1_4_OR_GREATER
-    partial class FileInfoExtensions
-    {
-        private static readonly DateTime EpochMinDateTime = new DateTime(1970, 1, 1, 0, 0, 0);
-        private static readonly DateTime EpochMaxDateTime = EpochMinDateTime.AddSeconds(int.MaxValue);
-
-        public static bool SecureDelete(this FileInfo fileInfo, bool obfuscateFileDateTime)
-        {
-            if (!fileInfo.Exists)
-                return false;
-
-            fileInfo.TurnOffContentIndexing();
-
-            if (obfuscateFileDateTime)
-            {
-                using (var rng = RandomNumberGenerator.Create())
-                {
-                    var obfuscatedCreationTime = rng.NextDateTime(EpochMinDateTime, EpochMaxDateTime);
-                    var obfuscatedLastAccessTime = rng.NextDateTime(EpochMinDateTime, EpochMaxDateTime);
-                    var obfuscatedLastWriteTime = rng.NextDateTime(EpochMinDateTime, EpochMaxDateTime);
-
-                    fileInfo.CreationTime = obfuscatedCreationTime;
-                    fileInfo.LastAccessTime = obfuscatedLastAccessTime;
-                    fileInfo.LastWriteTime = obfuscatedLastWriteTime;
-                }
-            }
-
-            return SecureDelete(fileInfo);
-        }
-
-        public static async Task<bool> SecureDeleteAsync(this FileInfo fileInfo, bool obfuscateFileDateTime = true, CancellationToken cancellationToken = default)
-        {
-            if (obfuscateFileDateTime)
-            {
-                using (var rng = RandomNumberGenerator.Create())
-                {
-                    var obfuscatedCreationTime = rng.NextDateTime(EpochMinDateTime, EpochMaxDateTime);
-                    var obfuscatedLastAccessTime = rng.NextDateTime(EpochMinDateTime, EpochMaxDateTime);
-                    var obfuscatedLastWriteTime = rng.NextDateTime(EpochMinDateTime, EpochMaxDateTime);
-
-                    fileInfo.CreationTime = obfuscatedCreationTime;
-                    fileInfo.LastAccessTime = obfuscatedLastAccessTime;
-                    fileInfo.LastWriteTime = obfuscatedLastWriteTime;
-                }
-            }
-
-            return await SecureDeleteAsync(fileInfo, cancellationToken).ConfigureAwait(false);
-        }
-    }
-#endif // NETSTANRDARD1_4_OR_GREATER
 
     internal static partial class FileInfoExtensions { }
 }

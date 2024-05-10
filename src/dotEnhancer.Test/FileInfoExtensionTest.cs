@@ -2,14 +2,14 @@
 
 namespace dotEnhancer.Test;
 
-public class FileExtensionTest
+public class FileInfoExtensionTest
 {
     [Fact]
     public void SecureDeleteTest()
     {
         var fileInfo = new FileInfo(Path.GetTempFileName());
         fileInfo.OverwriteAllText("Hello, World!", new UTF8Encoding(false));
-        fileInfo.SecureDelete(obfuscateFileDateTime: true);
+        fileInfo.SecureDelete(SecureDeleteObfuscationMode.All);
         Assert.False(fileInfo.Exists);
     }
 }
