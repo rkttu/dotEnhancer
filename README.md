@@ -48,7 +48,7 @@ using var writableStream = new MemoryStream();
 writableStream.WriteStringWithEncoding(value, targetEncoding);
 ```
 
-### Initiate String Builder
+### Initiate String Builder (.NET Standard 1.0 or later)
 
 ```csharp
 using dotEnhancer;
